@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 from .models import Contact
+from django.contrib import messages
 
 
 # Create your views here.
@@ -22,7 +23,8 @@ def contact(request):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         desc = request.POST.get('desc')
-        contact = Contact(name=name, phone=phone, email=email, desc=desc, date=datetime.today())
-        contact.save()
-
+        contact_obj = Contact(name=name, phone=phone, email=email, desc=desc,
+                              date=datetime.today())
+        contact_obj.save()
+        messages.success(request, "Your message has been sent")
     return render(request, 'contact.html')
